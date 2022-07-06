@@ -85,7 +85,7 @@ public class UserService {
 
 // 회원 "user1" 을 조회
         Users foundUser = userRepository.findById("user1").orElse(null);
-// 중요!) foundUser 는 DB 값이 아닌 1차 캐시에서 가져오는 값
+// 중요!) foundUser 는 DB 값이 아닌 1차 캐시에서 가져오는 값이라 주소값 같음! DB는 변경되지 않음!!!
         assert(foundUser == savedUser);
         assert(foundUser.getUsername().equals(savedUser.getUsername()));
         assert(foundUser.getNickname().equals(savedUser.getNickname()));
@@ -94,7 +94,7 @@ public class UserService {
         return foundUser;
     }
 
-    public Users updateUser1() {
+    public Users updateUser1() {//수정사항 DB에 적용하는 방법1
 // 테스트 회원 "user1" 생성
         Users user = new Users("user1", "RM", "고기");
 // 회원 "user1" 객체를 영속화
@@ -112,7 +112,7 @@ public class UserService {
         return savedUser2;
     }
 
-    @Transactional
+    @Transactional //함수 끝난 후 알아서 update
     public Users updateUser2() {
 // 테스트 회원 "user1" 생성
 // 회원 "user1" 객체 추가
